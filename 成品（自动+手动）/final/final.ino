@@ -116,11 +116,11 @@ void spin_right(int time) //右转(右轮后退，左轮前进)
     digitalWrite(Right_motor_go,LOW); //右电机后退
     digitalWrite(Right_motor_back,HIGH);
     analogWrite(Right_motor_go,0);
-    analogWrite(Right_motor_back,150); 
+    analogWrite(Right_motor_back,200); 
     digitalWrite(Left_motor_go,LOW); //左电机前进
     digitalWrite(Left_motor_back,HIGH);
     analogWrite(Left_motor_go,0);
-    analogWrite(Left_motor_back,150);
+    analogWrite(Left_motor_back,200);
     delay(time * 100);  //执行时间，可以调整
 }
 
@@ -228,49 +228,50 @@ void right_detection()
 
 void loop()
 {
+      for(int i=0;i<=5;i++)  
+      {
+          servopulse(servopin,90);   //引用脉冲函数
+      }
     //================手动部分============
     if (state == 0)
     {
         getstr=Serial.read(); 
         if(getstr=='A')
         {
-            Serial.println("go forward!");
             run();
         }
         else if(getstr=='B')
         {
-            Serial.println("go back!");
             back(1);
         }
         else if(getstr=='C')
         {
-            Serial.println("go left!");
             left(1);
         }
         else if(getstr=='D')
         {
-            Serial.println("go right!");
             right(1);
         }
         else if(getstr=='F')
         {
-            Serial.println("Stop!");
             brake(1);
         }
         else if(getstr=='E')
         {
-            Serial.println("Stop!");
             brake(1);
         }
         else if(getstr=='Z')
         {
-            Serial.println("Switch!");
             state=1;
          }
     }
     //================自动部分=============
     else
     {
+      for(int i=0;i<=5;i++)  
+      {
+          servopulse(servopin,90);   //引用脉冲函数
+      }
         //    keyscan(); //调用按键扫描函数
         while(1)
         {
@@ -342,7 +343,7 @@ void loop()
                 right_detection();//测量右边距障碍物距离
                 if((Left_Distance < 20) && (Right_Distance < 20)) //当左右两侧均有障碍物靠得比较近
                 {
-                    spin_left(0.7);//旋转掉头
+                    left(0.7);//旋转掉头
                 }
                 else if(Left_Distance > Right_Distance) //左边比右边空旷
                 {
