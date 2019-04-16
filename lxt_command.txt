@@ -1,0 +1,2 @@
+sudo nvpmodel -m 0
+python2 tools/client.py --usb           --prototxt models/pascal_voc/GoogLeNet/faster_rcnn_end2end/test.prototxt           --model models/pascal_voc/GoogLeNet/faster_rcnn_end2end/voc2007_googlenet_iter_70000.caffemodel
